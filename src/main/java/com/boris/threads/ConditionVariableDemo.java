@@ -6,4 +6,5 @@ public class ConditionVariableDemo {
             new HungryPerson(i).start();
         }
     }
+
 }
