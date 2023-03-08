@@ -2,10 +2,10 @@ package com.boris.threads;
 
 import java.util.concurrent.*;
 
-class RecursiveSum extends RecursiveTask<Long> {
+class RecursiveSum2 extends RecursiveTask<Long> {
     private long lo, hi;
 
-    public RecursiveSum(long lo, long hi) {
+    public RecursiveSum2(long lo, long hi) {
         this.lo = lo;
         this.hi = hi;
     }
@@ -17,8 +17,8 @@ class RecursiveSum extends RecursiveTask<Long> {
             return total;
         } else {
             long mid = (hi + lo)/2; //middle index for split
-            RecursiveSum left = new RecursiveSum(lo, mid);
-            RecursiveSum right = new RecursiveSum(mid + 1, hi);
+            RecursiveSum2 left = new RecursiveSum2(lo, mid);
+            RecursiveSum2 right = new RecursiveSum2(mid + 1, hi);
             left.fork(); //forked thread computes left half
             return right.compute() + left.join(); //current thread computes right half
         }
@@ -28,7 +28,7 @@ class RecursiveSum extends RecursiveTask<Long> {
 public class DivideAndConquerDemo {
     public static void main(String[] args) {
         ForkJoinPool pool = ForkJoinPool.commonPool();
-        Long total = pool.invoke(new RecursiveSum(0, 1_000_000_000));
+        Long total = pool.invoke(new RecursiveSum2(0, 1_000_000_000));
         pool.shutdown();
         System.out.println("total sum = " + total);
     }
